@@ -1,0 +1,29 @@
+.popup{
+    position: absolute;
+    width: 500px;
+    background : #fff;
+    border-radius: 6px;
+    position: absolute;
+    top: 0;
+    left: 30%;
+    transform: translate(-50%, - 50%) scale(0.1);
+    text-align: center;
+    padding: 30px 30px 30px 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333;
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+}
+
+.open-popup{
+    visibility: visible;
+    top: 30%;
+    transform: translate(-50%, - 50%) scale(1);
+}
+.table{
+    border: 3px;
+    border-color: #333;
+}
+h1{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
