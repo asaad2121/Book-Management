@@ -12,10 +12,17 @@
     <title>Home</title>
 </head>
 <body>
+    <nav class="navbar bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="http://127.0.0.1:8000/?q=">Author Details</a>
+          <form class="d-flex" role="search" action="{% url 'search_results' %}" method="get">
+            <input class="form-control me-2" value="" name="q" type="text" placeholder="Search" aria-label="Search">
+          </form>
+        </div>
+      </nav><br>
     <div class="container">
-        <hr>
-    <h1>Author Details</h1><hr>
-    {% if age_dict %}
+
+    {% if dataDet %}
     <table class="table">
     <thead>
         <th>Name</th>
@@ -30,7 +37,7 @@
         <td> {{acc.auth_age}} </td>
         <td> {{acc.auth_gender}} </td>
         <td> {{acc.auth_country.name}} </td>
-    </tr><br>
+    </tr>
     {% endfor %} 
     </table>   
     {% else %}
@@ -42,7 +49,7 @@
     <button type="submit" class="btn btn-primary" onclick="openPopUp()">Add New</button>
     <div class="popup" id="popup">
     <form method="POST" class="form-control">
-        {{form.as_p}}
+        {{form}}
         {% csrf_token %}
         <input type="submit" class="btn btn-primary" value="Submit" onclick="closePopUp()">
     </form>
