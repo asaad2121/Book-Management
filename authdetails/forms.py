@@ -6,6 +6,7 @@ class authForm(forms.ModelForm):
         GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
+        ('O', 'Others')
         )
         model = authorDet
         fields = '__all__'

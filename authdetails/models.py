@@ -8,6 +8,7 @@ class authorDet(models.Model):
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
+        ('O', 'Others')
     )
 
     auth_name = models.CharField(max_length=30, unique=True)

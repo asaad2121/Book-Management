@@ -3,6 +3,8 @@ from .models import authorDet, bookDet
 from django.views.generic.list import ListView
 from django.db.models import Q
 from .forms import authForm
+from django.http import HttpResponse
+import csv
 
 def get_queryset(self): 
         query = self.request.GET.get("q")
@@ -32,3 +34,17 @@ def index(request):
     else:
         form = authForm()
     return render(request, 'authordetails/index.html',{'form':form, 'dataDet':dataDet})         
+
+def download_as_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=Authors.csv' 
+    
+    writer = csv.writer(response)
+    writer.writerow(['Name','Age','Gender','Country'])
+    
+    # expenses = queryset_filter(User.objects.get(username=request.user.username),filter_by).order_by('date')
+    authors = authorDet.objects.filter()
+    for auth in authors:
+        writer.writerow([auth.auth_name, auth.auth_age, auth.auth_gender, auth.auth_country.name])
+    
+    return response
