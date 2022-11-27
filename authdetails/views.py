@@ -13,8 +13,7 @@ import csv
 def bookView(request):
     model = bookDet
     template_name = "authordetails/books.html"
-            
-    print(request.GET)
+    
     query = request.GET.get("q","")
     dataDet= bookDet.objects.filter(  Q(book_name__icontains=query) )
 

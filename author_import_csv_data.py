@@ -6,6 +6,7 @@ import pandas as pd
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'genebox.settings')
 django.setup()
 from authdetails.models import authorDet
+from django_countries import countries
 
 def import_data():
 
@@ -14,7 +15,6 @@ def import_data():
         csv = pd.read_csv(csv_file)
 
         csv.columns = [c.lower() for c in csv.columns]
-        # writer.writerow(['Name','Age','Gender','Country'])
         author_count = 0
 
         for i,row in csv.iterrows():
@@ -35,6 +35,10 @@ def import_data():
 
             if not pd.isna(row['country']):
                 country = row['country'].strip()
+                for code, name in list(countries):
+                    if name.lower() == country.lower():
+                        country=code
+                        break
             else:
                 country = 'Loaded From Csv'
             

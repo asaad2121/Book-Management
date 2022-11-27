@@ -100,7 +100,7 @@
     {% endif %}
 
     <button type="submit" class="btn btn-primary" onclick="openPopUp()">Add New</button>
-    <div class="popup" id="popup">
+    <div class="popup" id="popup" style="background-color: grey ;">
     <form method="POST" class="form-control">
         {{form}}<br>
         {% csrf_token %}
