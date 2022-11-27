@@ -10,12 +10,38 @@ from rest_framework import status
 from .serializers import BookDetailsSerializer,BookAuthorDetailsSerializer
 import csv
 
+
+def is_valid_queryparam(param):
+    return param != '' and param is not None
+
 def bookView(request):
     model = bookDet
     template_name = "authordetails/books.html"
-    
+
     query = request.GET.get("q","")
     dataDet= bookDet.objects.filter(  Q(book_name__icontains=query) )
+    dataDet = bookDet.objects.all()   
+    rating = request.GET.get('rating')
+    year_count_min = request.GET.get('year_count_min')
+    year_count_max = request.GET.get('year_count_max')
+    page_count_min = request.GET.get('page_count_min')
+    page_count_max = request.GET.get('page_count_max')
+    
+
+    if is_valid_queryparam(rating) and rating != 'Select':
+        dataDet = dataDet.filter(average_critics_rating=rating)
+
+    if is_valid_queryparam(year_count_min):
+        dataDet = dataDet.filter(book_date__gte=year_count_min)
+        
+    if is_valid_queryparam(year_count_max):
+        dataDet = dataDet.filter(book_date__lt=year_count_max)
+    
+    if is_valid_queryparam(page_count_min):
+        dataDet = dataDet.filter(book_pages__gte=page_count_min)
+        
+    if is_valid_queryparam(page_count_max):
+        dataDet = dataDet.filter(book_pages__lt=page_count_max)
 
     form = booksForm()
     if request.method == 'POST':
@@ -28,9 +54,6 @@ def bookView(request):
     else:
         form = booksForm()
     return render(request, 'authordetails/books.html',{'form':form, 'dataDet':dataDet})         
-
-def is_valid_queryparam(param):
-    return param != '' and param is not None
 
 def index(request):
     model = authorDet
