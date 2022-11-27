@@ -11,69 +11,65 @@
     
     <title>Home</title>
 </head>
-<body>
+<body><nav class="navbar bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="http://127.0.0.1:8000/">Author Details</a>
+      <a class="navbar-brand" href="http://127.0.0.1:8000/books">Book Details</a>  
+      <a></a><a></a><a></a><a></a><a></a><a></a>
+      <form class="d-flex" role="search" action="{% url 'search_results' %}" method="get">
+        <input class="form-control me-2" value="" name="q" type="text" placeholder="Search" aria-label="Search">
+      </form>
+    </div>
+  </nav>
     {% if dataDet %}
-    <nav class="navbar bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="http://127.0.0.1:8000/?q=">Author Details</a>
-          <form class="d-flex" role="search" action="{% url 'search_results' %}" method="get">
-            <input class="form-control me-2" value="" name="q" type="text" placeholder="Search" aria-label="Search">
-          </form>
-        </div>
-      </nav><br>
+    <br>
       <div class="container"><br>
         <div class="row">
     <div class="col-3" style="margin-left: -4rem ;">
-        <br><h3 style="text-align: center ; margin-left: -2rem;">FILTERS</h3>
-      <div class="accordion" id="accordionExample" style="width: 13rem">
-      <div class="accordion-item" style="background-color: #a6a6a6 ;">
+    <br>
+    <h3 style="text-align: center ; margin-left: -2rem;">FILTERS</h3>
+        
+        <div class="accordion" id="accordionExample" style="width: 13rem">
+        <div class="accordion-item" style="background-color: #a6a6a6 ;">
 		<h2 class="accordion-header" id="headingOne">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                 <strong>Gender</strong>
             </button>
           </h2>
+          <form action="." method="get">
           <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
             <div class="accordion-body" style="background-color: white ;">     
 				
-				<div class="form-check" style="background-color: white ;">
-					<input class="form-check-input" type="checkbox" name="category_name" id="" value="">
-					<label class="form-check-label" for="">
-						M
-					</label>
-				</div>
-                <div class="form-check" style="background-color: white ;">
-					<input class="form-check-input" type="checkbox" name="category_name" id="" value="">
-					<label class="form-check-label" for="">
-						F
-					</label>
-				</div>
-                <div class="form-check" style="background-color: white ;">
-					<input class="form-check-input" type="checkbox" name="category_name" id="" value="">
-					<label class="form-check-label" for="">
-						O
-					</label>
-				</div>
-                <button class="btn btn-primary" style="align-self: center ;">Filter</button>
+            <select id="category" class="form-control" name="genders">
+                <option selected>Select</option>                
+                <option value="M">Male</option>    
+                <option value="F">Female</option>    
+                <option value="O">Other</option>    
+            </select>
+            <br>
+            <button type="submit" class="btn btn-primary">Search</button>
 			</div>
-		</div>
+		</div></form>
 	</div>
     <div class="accordion-item" style="background-color: #a6a6a6 ;">
 		<h2 class="accordion-header" id="headingOne" >
 			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"><strong>Age</strong></button>
 		</h2>
 		<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="background-color: white ; ">
-        
+            <form method="GET" action=".">
 			<div class="accordion-body" style="background-color: white ;">
 				<div class="card-body" style="background-color: white ;">
-					<b>Min</b> <input style="background-color: white ; width: 5rem;" type="range" class="custom-range" min="{{ min_age.auth_age__min }}" max="{{ max_age.auth_age__max }}" name="range_input" id="range_input" oninput="max_range.value=this.value"> <b>Max</b>
+					<b>Min</b> 
+                    <input style="background-color: white ; width: 5rem;" type="range" class="custom-range" min="" max="" name="age_input" id="range_input" oninput="max_range.value=this.value">
+                    <b>Max</b>
 					<div class="form-row" style="background-color: white ;">
 						
-							<div class="form-group col"><input class="form-control" placeholder="Min: {{ min_age.auth_age__min }}" type="number" id="min_range" name="min_range" value="{{ min_age.auth_age__min }}"> </div>
-							<div class="form-group col"><input class="form-control" placeholder="Max: {{ max_age.auth_age__max }}" type="number" id="max_range" name="max_range" onkeyup="range_input.value=this.value" /> </div><br>
-						
+							<div class="form-group col"><input class="form-control" placeholder="Min:" type="number" id="min_range" name="age_count_min" value="{{ min_age.auth_age__min }}"> </div>
+							<div class="form-group col"><input class="form-control" placeholder="Max:" type="number" id="max_range" name="age_count_max" onkeyup="range_input.value=this.value" /> </div><br>
+                            <button type="submit" class="btn btn-primary">Search</button>
 					</div>
 				</div>
-			</div>
+			</div></form>
 		</div>
 	</div>
 </div>
@@ -106,13 +102,13 @@
     <button type="submit" class="btn btn-primary" onclick="openPopUp()">Add New</button>
     <div class="popup" id="popup">
     <form method="POST" class="form-control">
-        {{form}}
+        {{form}}<br>
         {% csrf_token %}
         <input type="submit" class="btn btn-primary" value="Submit" onclick="closePopUp()">
     </form>
-    </div>
+    </div><a id="download_as_csv_expense" href="{% url 'download_as_csv' %}" class="btn btn-secondary">Download as Csv</a>
     </div></div>
-    <a id="download_as_csv_expense" href="{% url 'download_as_csv' %}" class="btn btn-neutral" class="btn btn-neutral">Download as Csv</a>
+    
 </div>
     <script>
         let popup = document.getElementById("popup");
