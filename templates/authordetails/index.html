@@ -14,8 +14,8 @@
 <body>
 <nav class="navbar bg-light">
 <div class="container-fluid">
-    <a class="navbar-brand" href="http://127.0.0.1:8000/">Author Details</a>
-    <a class="navbar-brand" href="http://127.0.0.1:8000/books">Book Details</a>  
+    <a class="navbar-brand" href="{% url 'index' %}">Author Details</a>
+    <a class="navbar-brand" href="{% url 'book_view' %}">Book Details</a>  
     <a></a><a></a><a></a><a></a><a></a><a></a>
     <form class="d-flex" role="search" action="{% url 'search_results' %}" method="get">
     <input class="form-control me-2" value="" name="q" type="text" placeholder="Search" aria-label="Search">
