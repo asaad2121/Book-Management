@@ -35,8 +35,8 @@ def import_data():
 
             if not pd.isna(row['country']):
                 country = row['country'].strip()
-                for code, name in list(countries):
-                    if name.lower() == country.lower():
+                for code, country_name in list(countries):
+                    if country_name.lower() == country.lower():
                         country=code
                         break
             else:

@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import BookDetailsSerializer,BookAuthorDetailsSerializer
 import csv
+import datetime
 
 
 def is_valid_queryparam(param):
@@ -20,7 +21,6 @@ def bookView(request):
 
     query = request.GET.get("q","")
     dataDet= bookDet.objects.filter(  Q(book_name__icontains=query) )
-    dataDet = bookDet.objects.all()   
     rating = request.GET.get('rating')
     year_count_min = request.GET.get('year_count_min')
     year_count_max = request.GET.get('year_count_max')
@@ -32,10 +32,10 @@ def bookView(request):
         dataDet = dataDet.filter(average_critics_rating=rating)
 
     if is_valid_queryparam(year_count_min):
-        dataDet = dataDet.filter(book_date__gte=year_count_min)
+        dataDet = dataDet.filter(book_date__gte=datetime.date(int(year_count_min), 1,1))
         
     if is_valid_queryparam(year_count_max):
-        dataDet = dataDet.filter(book_date__lt=year_count_max)
+        dataDet = dataDet.filter(book_date__lt=datetime.date(int(year_count_max), 12, 31))
     
     if is_valid_queryparam(page_count_min):
         dataDet = dataDet.filter(book_pages__gte=page_count_min)
@@ -65,8 +65,7 @@ def index(request):
     age_count_max = request.GET.get('age_count_max')
     genders = request.GET.get('genders')
     
-    dataDet= authorDet.objects.filter(  Q(auth_name__icontains=query) | Q(auth_country__icontains=query)  )
-    dataDet = authorDet.objects.all()        
+    dataDet= authorDet.objects.filter(  Q(auth_name__icontains=query) | Q(auth_country__icontains=query)  )    
     if is_valid_queryparam(age_count_min):
         dataDet = dataDet.filter(auth_age__gte=age_count_min)
 
